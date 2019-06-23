@@ -9,7 +9,7 @@ After finding all relevant asets it then writes the results to a /csv file: "ila
 
 This script uses Python3 with various libs - this repo also contains a virtual python env - so no need to download Python3 or install any libraries for it.
 
-# Future Enhancements would be:
+### Future Enhancements would be:
 1. Make query as an argument instead of hard coded.
 2. Make API key read from a remote file or other remote asset.
 3. The script takes about 7 minutes to run - find a way to shorten calls to API/Library.

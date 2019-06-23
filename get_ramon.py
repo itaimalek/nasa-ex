@@ -13,16 +13,16 @@ def getHttpCall(base_url,payload,headers):
     return raw
 
 def doCSV(fits):
-    csv_columns = ['name','size']
+    csv_columns = ['nasa_id','kb']
     csv_file = "ilan_ramon.csv"
-    try:
-        with open(csv_file, 'w') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-            writer.writeheader()
-            for data in fits["items"]:
-                writer.writerow(data)
-    except:
-        logging.error("Couldn't write csv file")
+    #try:
+    with open(csv_file, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+        writer.writeheader()
+        for data in fits["items"]:
+            writer.writerow(data)
+    #except:
+    #    logging.error("Couldn't write csv file")
          
 
 def metaLinks(collection):
@@ -54,10 +54,10 @@ def extractAndFilter(metas):
             logging.warning("meta {} couldn't be reached".format(meta))
             continue
         if "File:FileSize" in data and "AVAIL:NASAID" in data:
-            size = data["File:FileSize"]
+            size = data["File:FileSize"].split(' ')[0]
             name = data["AVAIL:NASAID"]
             if float(size.split(' ')[0]) > 1000:
-                fits["items"].append({"name":name,"size":size}) 
+                fits["items"].append({"nasa_id":name,"kb":size}) 
     logging.debug(fits)
     return fits
 
@@ -69,7 +69,7 @@ def queryAPI(q,api_key,base_url):
     try:
         raw = getHttpCall(base_url,payload,headers)
     except:
-        logging.error("NASA endpoint could not be reached")
+        logging.error("NASA endpoint could not be reached, try again later")
         #print ("NASA endpoint could not be reached")
         sys.exit(1) 
     collection = raw["collection"]["items"]

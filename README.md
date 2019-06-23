@@ -9,6 +9,9 @@ After finding all relevant asets it then writes the results to a /csv file: "ila
 
 This script uses Python3 with various libs - this repo also contains a virtual python env - so no need to download Python3 or install any libraries for it.
 
+#### Usage:
+cd to nasa-ex and run ./get_ramon.py
+
 ### Future Enhancements would be:
 1. Make query as an argument instead of hard coded.
 2. Make API key read from a remote file or other remote asset.

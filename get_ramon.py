@@ -59,6 +59,7 @@ def extractAndFilter(metas):
             if float(size.split(' ')[0]) > 1000:
                 fits["items"].append({"name":name,"size":size}) 
     logging.debug(fits)
+    return fits
 
 
 def queryAPI(q,api_key,base_url):
@@ -73,7 +74,6 @@ def queryAPI(q,api_key,base_url):
         sys.exit(1) 
     collection = raw["collection"]["items"]
     links = []
-    print(raw["collection"]["links"][0])
     while "prompt" in raw["collection"]["links"][0] and raw["collection"]["links"][0]["prompt"] == "Next":
         logging.info("got additional page")
         link = raw["collection"]["links"][0]
@@ -84,7 +84,7 @@ def queryAPI(q,api_key,base_url):
                 page = param.split('=')[1]
                 pagePay = {"page": page}
                 payload.update(pagePay)
-                logging.info("Next page is page {} payload is {}".format(page,payload))
+                logging.debug("Next page is page {} payload is {}".format(page,payload))
                 if int(page) != 1:
                     try:
                         raw = getHttpCall(base_url,payload,headers)
